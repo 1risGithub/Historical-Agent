@@ -1,0 +1,11 @@
+TOPIC:
+Genghis Khan
+
+POSITIVE:
+Genghis Khan was the founder and first khan of the Mongol Empire. He successfully united the Mongol tribes, transforming their tribal structure into an integrated meritocracy. His conquests facilitated unprecedented commercial and cultural exchange over a vast geographical area. He is remembered as the founding father of the Mongolian nation. He was known for being generous and intensely loyal to his followers, and for welcoming advice from diverse sources.
+
+NEGATIVE:
+Genghis Khan remains a controversial figure. He was ruthless towards his enemies. The Mongol army under Genghis killed millions of people, and he is remembered as a backwards, savage tyrant in Russia and the Arab world.
+
+VERDICT:
+Neutral summary
