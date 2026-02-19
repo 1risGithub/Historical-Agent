@@ -425,17 +425,4 @@ This project demonstrates practical implementation of:
 * AI-based historical analysis
 * Tool-controlled execution
 
----
-
-# ✅ Project Status
-
-✔ Assignment Complete
-✔ Fully Functional
-✔ Ready for Submission
-✔ Portfolio Ready
-
----
-
-# ⚖️ The Historical Court
-
 Multi-Agent System using Google ADK
