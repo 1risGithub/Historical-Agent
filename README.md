@@ -1,6 +1,6 @@
 # ⚖️ The Historical Court
 
-## Multi-Agent System using Google ADK
+## Multi-Agent System using Google Agent Development Kit (ADK)
 
 ---
 
@@ -8,502 +8,434 @@
 
 **Name:** Khanatip Chimphu
 **Student ID:** 66010095
-**Project:** Multi-Agent System using Google Agent Development Kit (ADK)
-**Assignment:** The Historical Court
+**Course Assignment:** Multi-Agent System using Google ADK
+**Project Title:** The Historical Court
 
 ---
 
-# 📖 Project Description
+# 📖 Overview
 
-**The Historical Court** is a Multi-Agent System built using the **Google Agent Development Kit (ADK)** that simulates a courtroom for historical analysis.
+**The Historical Court** is a Multi-Agent System developed using Google's **Agent Development Kit (ADK)** that simulates a courtroom environment to analyze historical figures or events.
 
-The system investigates a historical figure or event by assigning multiple AI agents to research **different perspectives from Wikipedia**.
+The system assigns multiple AI agents to research **conflicting perspectives from Wikipedia**, evaluate the balance of information, and produce a **neutral, evidence-based historical verdict**.
 
-Instead of providing a one-sided answer, the system produces a **balanced, neutral, and evidence-based verdict**.
+Instead of generating a one-sided answer, the system ensures fairness by using:
 
-The final result is saved as a `.txt` report file.
-
----
-
-# 🎯 Project Objective
-
-This project aims to demonstrate:
-
-* Multi-Agent collaboration
-* Parallel task execution
+* Parallel research agents
 * Loop-based review process
-* Session state management
-* Tool-based loop exit control
-* Balanced historical analysis
+* Tool-controlled loop termination
+* Structured session state management
+
+The final verdict is automatically saved as a `.txt` file.
 
 ---
 
-# 🧠 System Architecture Overview
+# 🎯 Project Objectives
 
-The system consists of **4 main stages**
+This project demonstrates key concepts in modern AI system design:
+
+* Multi-Agent Architecture
+* Parallel Task Execution
+* Loop-based Decision Workflow
+* Session State Management
+* Tool-based Loop Control using `exit_loop`
+* Automated Report Generation
+* Integration with External Knowledge Source (Wikipedia)
+
+---
+
+# 🧠 System Architecture
+
+The system follows a courtroom-inspired workflow:
 
 ```
-
-User Input → Investigation → Trial & Review → Final Verdict
-
+User Input
+    │
+    ▼
+Inquiry Agent
+    │
+    ▼
+Parallel Investigation
+ ┌───────────────┬───────────────┐
+ │               │               │
+ ▼               ▼               │
+Admirer Agent   Critic Agent    │
+ │               │               │
+ └──────► Session State ◄───────┘
+               │
+               ▼
+           Judge Agent
+        (Loop until balanced)
+               │
+               ▼
+         Verdict Writer
+               │
+               ▼
+        Output Verdict File
 ```
 
 ---
 
-# ⚙️ Step 1: The Inquiry (Sequential Agent)
+# ⚙️ Agent Workflow Explanation
 
-## 🧑‍💼 Inquiry Agent
+---
+
+# Step 1 — Inquiry Phase
+
+## Inquiry Agent
 
 ### Responsibility
 
-Receive topic from user
+* Receive historical topic from user
+* Store topic in Session State
+
+### Session State Key
+
+```
+topic
+```
 
 ### Example Input
 
-````
-
+```
+Napoleon Bonaparte
+Cold War
 Genghis Khan
+```
 
+---
+
+# Step 2 — Investigation Phase (Parallel Execution)
+
+Two research agents run simultaneously.
+
+---
+
+## 🟢 Admirer Agent
+
+### Role
+
+Research ONLY positive aspects.
+
+### Research Focus
+
+* Achievements
+* Contributions
+* Legacy
+* Success
+
+### Example Search Queries
+
+```
+Napoleon achievements
+Genghis Khan legacy
 ```
 
 ### Store in Session State
 
 ```
-
-topic
-
+pos_data
 ```
 
 ---
 
-# 🔎 Step 2: The Investigation (Parallel Agents)
-
-Two agents run in parallel
-
----
-
-## 🟢 Agent A: The Admirer
+## 🔴 Critic Agent
 
 ### Role
 
-Research positive aspects only
+Research ONLY negative aspects.
 
-### Focus Keywords
+### Research Focus
 
-```
+* Controversies
+* Criticism
+* Failures
+* War crimes
 
-achievements
-accomplishments
-contributions
-legacy
-
-```
-
-### Example Search
+### Example Search Queries
 
 ```
-
-Genghis Khan achievements
-
+Napoleon controversy
+Cold War criticism
 ```
 
-### Store in State
+### Store in Session State
 
 ```
-
-pos_data
-
-```
-
----
-
-## 🔴 Agent B: The Critic
-
-### Role
-
-Research negative aspects only
-
-### Focus Keywords
-
-```
-
-controversy
-criticism
-failures
-war crimes
-
-```
-
-### Example Search
-
-```
-
-Genghis Khan controversy
-
-```
-
-### Store in State
-
-```
-
 neg_data
-
 ```
 
 ---
 
-# ⚖️ Step 3: The Trial & Review (Loop Agent)
+# Step 3 — Trial & Review Phase (Loop Control)
 
-## 👨‍⚖️ Agent C: The Judge
+## 👨‍⚖️ Judge Agent
 
-This agent reviews both sides
+The Judge Agent evaluates whether the information is balanced.
 
 ---
 
-## Responsibilities
+## Evaluation Criteria
 
-Check balance between:
+The Judge reviews:
 
 ```
-
 pos_data
 neg_data
-
 ```
 
 ---
 
-## If information is NOT balanced
+## If information is insufficient:
 
-Judge requests more research
+The Judge allows the loop to continue.
+
+Research agents will collect more data.
+
+---
+
+## If information is balanced:
+
+The Judge calls the required tool:
+
+```
+exit_loop
+```
+
+---
+
+## Important Assignment Requirement
+
+Loop termination is controlled using a Tool.
+
+NOT using prompt alone.
+
+This ensures:
+
+* Proper loop control
+* Assignment compliance
+* No infinite loops
+
+---
+
+# Step 4 — Verdict Phase
+
+## Verdict Writer Agent
+
+This agent generates the final historical report.
+
+---
+
+## Report Includes
+
+* Topic name
+* Positive contributions
+* Negative controversies
+* Neutral balanced verdict
+
+---
+
+## Output Location
+
+```
+historical_output/
+```
 
 Example:
 
 ```
-
-Admirer: Research more about economic contributions
-
-Critic: Research more about military destruction
-
-```
-
-Loop continues
-
----
-
-## If information IS balanced
-
-Judge calls required tool:
-
-```
-
-exit_loop
-
-```
-
-This satisfies assignment requirement:
-
-Prompt alone is NOT allowed to stop loop
-
----
-
-# 🧾 Step 4: The Verdict (Final Agent)
-
-Final report is generated
-
----
-
-## Output includes:
-
-- Summary
-- Positive contributions
-- Negative controversies
-- Neutral final verdict
-
----
-
-## Output File
-
-```
-
-output/verdict.txt
-
+historical_output/Napoleon Bonaparte.txt
 ```
 
 ---
 
-# 💾 Session State Management
+# 💾 Session State Design
 
-The system uses structured state keys:
+The system uses structured Session State:
 
-| State Key | Description |
-|---------|-------------|
-| topic | User topic |
-| pos_data | Positive research |
-| neg_data | Negative research |
-| verdict | Final report |
+| State Key | Description                |
+| --------- | -------------------------- |
+| topic     | User input topic           |
+| pos_data  | Positive research findings |
+| neg_data  | Negative research findings |
 
 ---
 
-# 🔁 Loop Control
+# 🔁 Loop Control Logic
 
 Loop termination uses:
 
 ```
-
 exit_loop tool
-
 ```
 
-Required by assignment rules
+This ensures:
+
+* Correct loop logic
+* Assignment requirement compliance
+* Safe execution
 
 ---
 
-# 🧰 Tools Used
+# 🧰 Technologies Used
 
-## Google ADK
-
-Used for:
-
-- Agent creation
-- Workflow management
-- State management
-- Loop control
-
----
-
-## Wikipedia Tool
-
-Used for:
-
-- Research information
-- Historical data retrieval
+| Technology       | Purpose                   |
+| ---------------- | ------------------------- |
+| Google ADK       | Multi-Agent orchestration |
+| Gemini 2.5 Flash | Language Model            |
+| Vertex AI        | Model Infrastructure      |
+| Wikipedia API    | Knowledge source          |
+| LangChain Tool   | Tool integration          |
+| Python           | Programming Language      |
 
 ---
 
 # 📁 Project Structure
 
 ```
-
-historical-court/
-
-│
-
-├── main.py
+Historical-Agent/
 
 │
-
-├── agents/
-
-│ ├── inquiry_agent.py
-
-│ ├── admirer_agent.py
-
-│ ├── critic_agent.py
-
-│ ├── judge_agent.py
-
-│ └── verdict_agent.py
-
+├── agent.py
+├── README.md
+├── .env.example
 │
-
-├── tools/
-
-│ ├── wiki_tool.py
-
-│ └── exit_loop.py
-
-│
-
-├── output/
-
-│ └── verdict.txt
-
-│
-
-└── README.md
-
+└── historical_output/
+      └── verdict files
 ```
 
 ---
 
-# 🚀 Example Workflow
+# 🚀 How to Run
 
-## User Input
+---
+
+## 1. Install dependencies
 
 ```
+pip install -r requirements.txt
+```
 
-Napoleon
+or
 
+```
+pip install google-adk langchain wikipedia python-dotenv
 ```
 
 ---
 
-## Admirer finds
+## 2. Set Environment Variables
+
+Create `.env`
+
+Example:
 
 ```
-
-Military genius
-Napoleonic Code
-Government reforms
-
-```
-
----
-
-## Critic finds
-
-```
-
-War casualties
-Dictatorship
-Exile
-
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_LOCATION=global
+MODEL=gemini-2.5-flash
 ```
 
 ---
 
-## Judge reviews
+## 3. Run ADK Web Interface
 
-Loop continues if needed
+```
+adk web --reload_agents
+```
 
 ---
 
-## Final Verdict Generated
+## 4. Enter Topic
 
-Saved to:
+Example:
 
 ```
+Alexander the Great
+```
 
-output/verdict.txt
+---
 
+## 5. Output Generated
+
+Saved in:
+
+```
+historical_output/
+```
+
+---
+
+# 📄 Example Output
+
+```
+THE HISTORICAL COURT VERDICT
+
+Topic: Napoleon Bonaparte
+
+Positive Contributions:
+- Legal reforms (Napoleonic Code)
+- Military leadership
+
+Negative Controversies:
+- War casualties
+- Authoritarian rule
+
+Final Verdict:
+Napoleon was both a brilliant reformer and a controversial ruler.
 ```
 
 ---
 
 # ⭐ Key Features
 
-✅ Multi-Agent System  
-
-✅ Parallel Processing  
-
-✅ Loop with exit_loop tool  
-
-✅ Wikipedia Integration  
-
-✅ Session State Management  
-
-✅ Automated Verdict Report  
-
-✅ Google ADK Implementation  
+* Multi-Agent System Architecture
+* Parallel Research Execution
+* Loop Control using exit_loop Tool
+* Wikipedia Knowledge Integration
+* Session State Management
+* Automated Report Generation
+* Google ADK Implementation
 
 ---
 
 # 📊 Assignment Requirements Fulfillment
 
-| Requirement | Status |
-|------------|--------|
-| Multi-Agent Structure | ✅ |
-| Parallel Agents | ✅ |
-| Loop with exit_loop Tool | ✅ |
-| Session State Management | ✅ |
-| Wikipedia Research | ✅ |
-| Final Output File | ✅ |
-| Github Ready | ✅ |
+| Requirement              | Status |
+| ------------------------ | ------ |
+| Sequential Agent         | ✅      |
+| Parallel Agents          | ✅      |
+| Loop Agent               | ✅      |
+| exit_loop Tool           | ✅      |
+| Session State Management | ✅      |
+| Wikipedia Research       | ✅      |
+| File Output              | ✅      |
+| Github Repository        | ✅      |
 
 ---
 
-# ▶️ How to Run
+# 🎓 Learning Outcomes
 
-## Install Dependencies
+This project demonstrates practical implementation of:
 
-```
-
-pip install google-adk
-pip install wikipedia
-
-```
-
----
-
-## Run Program
-
-```
-
-python main.py
-
-```
+* Multi-Agent Systems
+* Agent orchestration using Google ADK
+* Loop-based decision workflows
+* AI-based historical analysis
+* Tool-controlled execution
 
 ---
 
-## Enter Topic Example
+# ✅ Project Status
 
-```
-
-Cold War
-
-```
-
----
-
-## Output File
-
-```
-
-output/verdict.txt
-
-```
+✔ Assignment Complete
+✔ Fully Functional
+✔ Ready for Submission
+✔ Portfolio Ready
 
 ---
 
-# 🧾 Example Verdict Output
+# ⚖️ The Historical Court
 
-```
-
-THE HISTORICAL COURT VERDICT
-
-Topic: Genghis Khan
-
-Positive Contributions:
-- United Mongol tribes
-- Established trade routes
-
-Negative Controversies:
-- Mass destruction
-- Civilian killings
-
-Final Verdict:
-Genghis Khan was both a powerful empire builder and a controversial conqueror.
-
-```
-
----
-
-# 🎓 Conclusion
-
-This project demonstrates the power of Multi-Agent Systems in producing balanced analysis.
-
-Using Google ADK, agents collaborate, review, and produce a neutral verdict through structured workflows.
-
-This approach improves objectivity and reduces bias in AI-generated analysis.
-
----
-
-# 🔗 Github Repository
-
-Add your repository link here:
-
-```
-
-https://github.com/yourusername/historical-court
-
-```
-
----
-
-# ✅ Project Complete
-
-Multi-Agent System using Google ADK  
-The Historical Court
-
----
+Multi-Agent System using Google ADK
